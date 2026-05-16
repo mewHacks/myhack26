@@ -80,8 +80,8 @@ export function OpportunityCard({ href, item, glowClass, index, recommended = fa
           const maxY = Math.max(16, rect.height - 128);
 
           setTooltip({
-            x: clamp(x + 18, 16, maxX),
-            y: clamp(y - 12, 16, maxY),
+            x: clamp(x - 144, 16, maxX),
+            y: clamp(y - 64, 16, maxY),
             visible: true,
             skew: clamp(velocityX * 0.18, -8, 8),
           });
@@ -155,7 +155,7 @@ export function OpportunityCard({ href, item, glowClass, index, recommended = fa
               x: tooltip.x,
               y: tooltip.y,
             }}
-            className="pointer-events-none absolute left-0 top-0 z-20 hidden w-72 rounded-2xl border border-white/70 bg-white/95 p-4 text-sm leading-6 text-foreground shadow-xl backdrop-blur-md sm:block"
+            className="pointer-events-none absolute left-0 top-0 z-20 hidden w-80 rounded-2xl border border-white/70 bg-white/95 p-4 text-foreground shadow-xl backdrop-blur-md sm:block"
             initial={false}
             transition={{ type: "spring", stiffness: 420, damping: 34, mass: 0.7 }}
           >

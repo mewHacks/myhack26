@@ -26,6 +26,351 @@ export const opportunityTypes = {
 
 export type OpportunityType = keyof typeof opportunityTypes;
 
+export type HistoryEntry = {
+  name: string;
+  label?: string;
+  avatar?: string;
+  children?: HistoryEntry[];
+};
+
+export type HistoryGroup = {
+  title: string;
+  entries: HistoryEntry[];
+};
+
+export const defaultHistoryGroups: Record<OpportunityType, HistoryGroup[]> = {
+  program: [
+    {
+      title: "Led by",
+      entries: [
+        {
+          name: "Aisha Tan",
+          label: "Investor",
+          avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "AI Fund",
+              label: "LP network",
+              avatar: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=160&q=80",
+            },
+            {
+              name: "Cloud Studio",
+              label: "operator bench",
+              avatar: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Ben Carter",
+          label: "Operator",
+          avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Launch Team",
+              label: "GTM",
+              avatar: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Clara Wong",
+          label: "Partner",
+          avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Demo Guild",
+              label: "reviewers",
+              avatar: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Experience",
+      entries: [
+        {
+          name: "ex-Google AI",
+          label: "operator",
+          avatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Vertex AI",
+              label: "platform",
+              avatar: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=160&q=80",
+            },
+            {
+              name: "Search PM",
+              label: "product",
+              avatar: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "12 startups",
+          label: "backed",
+          avatar: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "4 AI tools",
+              label: "portfolio",
+              avatar: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "YC mentor",
+          label: "network",
+          avatar: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Batch alumni",
+              label: "founders",
+              avatar: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Backed by",
+      entries: [
+        {
+          name: "Northstar",
+          label: "seed fund",
+          avatar: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Seed LPs",
+              label: "capital",
+              avatar: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Orbit",
+          label: "infra",
+          avatar: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Infra angels",
+              label: "operators",
+              avatar: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  investor: [
+    {
+      title: "Team",
+      entries: [
+        {
+          name: "Mira Shah",
+          label: "GP",
+          avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Scout Circle",
+              label: "deal flow",
+              avatar: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=160&q=80",
+            },
+            {
+              name: "Founder LPs",
+              label: "operators",
+              avatar: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Leo Park",
+          label: "Scout",
+          avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Campus leads",
+              label: "sourcing",
+              avatar: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Track record",
+      entries: [
+        {
+          name: "Seed lead",
+          label: "rounds",
+          avatar: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Pre-seed",
+              label: "checks",
+              avatar: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "3 exits",
+          label: "portfolio",
+          avatar: "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "M&A bench",
+              label: "advisors",
+              avatar: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "AI infra",
+          label: "focus",
+          avatar: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Data stack",
+              label: "thesis",
+              avatar: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Backed by",
+      entries: [
+        {
+          name: "Alumni LPs",
+          label: "Google",
+          avatar: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Cloud alumni",
+              label: "network",
+              avatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Operator angels",
+          label: "Stripe",
+          avatar: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Fintech leads",
+              label: "operators",
+              avatar: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  mentor: [
+    {
+      title: "Guided by",
+      entries: [
+        {
+          name: "Olivia Chen",
+          label: "Product",
+          avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "UX reviewers",
+              label: "design",
+              avatar: "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Noah Reed",
+          label: "GTM",
+          avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Sales bench",
+              label: "GTM",
+              avatar: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Experience",
+      entries: [
+        {
+          name: "PM lead",
+          label: "Google",
+          avatar: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Roadmaps",
+              label: "product",
+              avatar: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Series A",
+          label: "coach",
+          avatar: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Pitch reps",
+              label: "fundraise",
+              avatar: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "Demo day",
+          label: "judge",
+          avatar: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Story desk",
+              label: "narrative",
+              avatar: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Worked with",
+      entries: [
+        {
+          name: "YC teams",
+          label: "mentor",
+          avatar: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Batch founders",
+              label: "peer group",
+              avatar: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+        {
+          name: "AI founders",
+          label: "growth",
+          avatar: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=160&q=80",
+          children: [
+            {
+              name: "Launch cohort",
+              label: "early users",
+              avatar: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=160&q=80",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export type BrowseOpportunity = {
   title: string;
   type: OpportunityType;
@@ -35,6 +380,7 @@ export type BrowseOpportunity = {
   meta: string;
   cta: string;
   className: string;
+  historyGroups?: HistoryGroup[];
 };
 
 export function getOpportunitySlug(audience: AudienceSlug, title: string) {

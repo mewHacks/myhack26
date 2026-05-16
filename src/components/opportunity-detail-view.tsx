@@ -5,9 +5,11 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 
 import { BrandMark } from "@/components/brand-mark";
+import { OpportunityHistoryTree } from "@/components/opportunity-history-tree";
 import { AiRecommendationIcon } from "@/components/ui/ai-recommendation-icon";
 import NavHeader from "@/components/ui/nav-header";
 import {
+  defaultHistoryGroups,
   headerLinks,
   opportunityTypes,
   type AudienceSlug,
@@ -33,6 +35,7 @@ export function OpportunityDetailView({ audience, item, theme }: OpportunityDeta
   const reducedMotion = useReducedMotion();
   const type = opportunityTypes[item.type];
   const entryColor = audienceEntryColor[audience];
+  const historyGroups = item.historyGroups ?? defaultHistoryGroups[item.type];
 
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-6 py-6 sm:px-10 lg:px-12 lg:py-10">
@@ -171,7 +174,7 @@ export function OpportunityDetailView({ audience, item, theme }: OpportunityDeta
               animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
               className="relative mt-8 flex flex-wrap gap-3"
               initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 18 }}
-              transition={{ delay: 1.42, duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 1.5, duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
             >
               <Link
                 href={`/${audience}`}
@@ -185,6 +188,16 @@ export function OpportunityDetailView({ audience, item, theme }: OpportunityDeta
             </motion.div>
           </motion.div>
         </div>
+
+        <motion.div
+          animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          className="mt-6 rounded-[1.75rem] border border-line bg-white/90 p-6 shadow-[0_18px_54px_rgba(60,64,67,0.08)] sm:p-8"
+          initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 28 }}
+          transition={{ delay: 1.48, duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-muted">History tree</p>
+          <OpportunityHistoryTree groups={historyGroups} mode="detail" />
+        </motion.div>
       </motion.section>
     </main>
   );
