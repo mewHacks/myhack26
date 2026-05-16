@@ -150,7 +150,12 @@ function scoreCandidate(
   };
 
   const breakdown = applyWeights(base, weights);
-  const score = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
+  const weightedMax = Object.values(getWeightedDimensionMaxes(weights)).reduce(
+    (sum, value) => sum + value,
+    0
+  );
+  const weightedScore = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
+  const score = Math.round((weightedScore / weightedMax) * 100);
 
   return {
     id: candidate.id,
@@ -165,12 +170,23 @@ function applyWeights(
   base: MatchBreakdown,
   weights: WeightOverrides
 ): MatchBreakdown {
+  const weightedMaxes = getWeightedDimensionMaxes(weights);
   return {
-    domain_fit: clamp(Math.round(base.domain_fit * weights.domain_fit), 0, DIMENSION_MAXES.domain_fit),
-    stage_fit: clamp(Math.round(base.stage_fit * weights.stage_fit), 0, DIMENSION_MAXES.stage_fit),
-    geography: clamp(Math.round(base.geography * weights.geography), 0, DIMENSION_MAXES.geography),
-    history: clamp(Math.round(base.history * weights.history), 0, DIMENSION_MAXES.history),
-    availability: clamp(Math.round(base.availability * weights.availability), 0, DIMENSION_MAXES.availability),
+    domain_fit: clamp(Math.round(base.domain_fit * weights.domain_fit), 0, weightedMaxes.domain_fit),
+    stage_fit: clamp(Math.round(base.stage_fit * weights.stage_fit), 0, weightedMaxes.stage_fit),
+    geography: clamp(Math.round(base.geography * weights.geography), 0, weightedMaxes.geography),
+    history: clamp(Math.round(base.history * weights.history), 0, weightedMaxes.history),
+    availability: clamp(Math.round(base.availability * weights.availability), 0, weightedMaxes.availability),
+  };
+}
+
+function getWeightedDimensionMaxes(weights: WeightOverrides): MatchBreakdown {
+  return {
+    domain_fit: Math.round(DIMENSION_MAXES.domain_fit * weights.domain_fit),
+    stage_fit: Math.round(DIMENSION_MAXES.stage_fit * weights.stage_fit),
+    geography: Math.round(DIMENSION_MAXES.geography * weights.geography),
+    history: Math.round(DIMENSION_MAXES.history * weights.history),
+    availability: Math.round(DIMENSION_MAXES.availability * weights.availability),
   };
 }
 
