@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #202124;
+  --card: #ffffff;
+  --muted: #5f6368;
+  --line: rgba(60, 64, 67, 0.25);
+  --google-blue: #4285f4;
+  --google-blue-soft: #e8f0fe;
+  --google-red: #ea4335;
+  --google-red-soft: #fce8e6;
+  --google-yellow: #fbbc05;
+  --google-yellow-soft: #fff8d1;
+  --google-green: #34a853;
+  --google-green-soft: #e6f4ea;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-google-blue: var(--google-blue);
+  --color-google-blue-soft: var(--google-blue-soft);
+  --color-google-red: var(--google-red);
+  --color-google-red-soft: var(--google-red-soft);
+  --color-google-yellow: var(--google-yellow);
+  --color-google-yellow-soft: var(--google-yellow-soft);
+  --color-google-green: var(--google-green);
+  --color-google-green-soft: var(--google-green-soft);
+  --font-sans: var(--font-inter);
+  --font-retro: var(--font-press-start-2p);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(66, 133, 244, 0.08), rgba(255, 255, 255, 0.8) 240px, #ffffff 100%);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+@layer utilities {
+  .font-press-start-2p {
+    font-family: var(--font-press-start-2p);
+    font-weight: 400;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(66, 133, 244, 0.24);
+}
