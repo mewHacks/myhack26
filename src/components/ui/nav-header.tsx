@@ -27,7 +27,6 @@ const defaultItems: NavTab[] = [
   { href: "/startup", label: "Startup", color: "var(--color-google-blue)" },
   { href: "/mentors", label: "Mentors", color: "var(--color-google-yellow)" },
   { href: "/investors", label: "Investors", color: "var(--color-google-green)" },
-  { href: "/", label: "Contact", color: "#000000" },
 ]
 
 export default function NavHeader({ items = defaultItems, className = "" }: NavHeaderProps) {
@@ -41,7 +40,7 @@ export default function NavHeader({ items = defaultItems, className = "" }: NavH
 
   return (
     <ul
-      className={`relative mx-auto flex w-fit rounded-full bg-white p-1 ${className}`}
+      className={`relative flex w-full max-w-full flex-wrap justify-start rounded-2xl bg-white p-1 sm:mx-auto sm:w-fit sm:flex-nowrap sm:rounded-full ${className}`}
       onMouseLeave={() => {
         setPosition((previous) => ({ ...previous, opacity: 0 }))
         setActiveLabel(null)
@@ -106,7 +105,7 @@ function Tab({
         setActiveLabel(null)
       }}
       style={{ color }}
-      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase transition duration-200 md:px-5 md:py-3 md:text-base"
+      className="relative z-10 block cursor-pointer px-2.5 py-2 text-[10px] uppercase transition duration-200 sm:px-3 sm:py-1.5 sm:text-xs md:px-5 md:py-3 md:text-base"
     >
       <Link
         href={href}
@@ -116,7 +115,7 @@ function Tab({
       >
         <span
           className={`font-press-start-2p transition-colors duration-200 ${
-            isActive ? "text-white" : "hover:text-white"
+            isActive ? "sm:text-white" : "sm:hover:text-white"
           }`}
         >
           {children}
@@ -130,7 +129,7 @@ function Cursor({ position }: { position: CursorPosition }) {
   return (
     <motion.li
       animate={position}
-      className="absolute top-0 left-0 z-0 h-full rounded-full"
+      className="absolute top-0 left-0 z-0 hidden h-full rounded-full sm:block"
       transition={{ type: "spring", stiffness: 260, damping: 25 }}
       style={{ backgroundColor: position.backgroundColor }}
     />

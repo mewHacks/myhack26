@@ -1,3 +1,5 @@
+import type { ActorType } from "@/lib/profiles";
+
 export type FeedbackEntry = {
   rating: number;
   comment: string;
@@ -23,6 +25,8 @@ export type Relationship = {
   rationale: string;
   breakdown?: MatchBreakdown;
   sessionCount: number;
+  reusable: boolean;
+  badMatch: boolean;
   feedbackFromViewer?: FeedbackEntry;
   feedbackFromMatched?: FeedbackEntry;
   createdAt: number;
@@ -47,15 +51,77 @@ export function findRelationship(id: string): Relationship | undefined {
   return store.relationships.find((r) => r.id === id);
 }
 
-export function createRelationship(data: Omit<Relationship, "id" | "createdAt" | "sessionCount">): Relationship {
+export function determineRelationshipType(
+  viewerType: ActorType,
+  matchedType: ActorType
+): Relationship["type"] {
+  if (
+    (viewerType === "mentor" && matchedType === "investor") ||
+    (viewerType === "investor" && matchedType === "mentor")
+  ) {
+    return "mentor:investor";
+  }
+  if (viewerType === "mentor" || matchedType === "mentor") {
+    return "mentor:founder";
+  }
+  return "investor:founder";
+}
+
+export function createRelationship(
+  data: Omit<Relationship, "id" | "createdAt" | "sessionCount" | "reusable" | "badMatch"> &
+    Partial<Pick<Relationship, "reusable" | "badMatch">>
+): Relationship {
   const rel: Relationship = {
     ...data,
     id: `rel_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
     sessionCount: 0,
+    reusable: data.reusable ?? false,
+    badMatch: data.badMatch ?? false,
     createdAt: Date.now(),
   };
   store.relationships.push(rel);
   return rel;
+}
+
+function getCombinedRating(rel: Relationship): number | null {
+  if (!rel.feedbackFromViewer || !rel.feedbackFromMatched) return null;
+  return (rel.feedbackFromViewer.rating + rel.feedbackFromMatched.rating) / 2;
+}
+
+export function submitFeedbackForActor(
+  rel: Relationship,
+  actorId: string,
+  entry: FeedbackEntry
+): "viewer" | "matched" | null {
+  if (actorId === rel.viewerId) {
+    rel.feedbackFromViewer = entry;
+  } else if (actorId === rel.matchedId) {
+    rel.feedbackFromMatched = entry;
+  } else {
+    return null;
+  }
+
+  if (rel.feedbackFromViewer && rel.feedbackFromMatched) {
+    const combinedRating = getCombinedRating(rel);
+    rel.status = "completed";
+    rel.completedAt = Date.now();
+    rel.reusable = combinedRating != null && combinedRating >= 4;
+    rel.badMatch = combinedRating != null && combinedRating < 2.5;
+  } else if (rel.status === "pending") {
+    rel.status = "active";
+  }
+
+  return actorId === rel.viewerId ? "viewer" : "matched";
+}
+
+export function submitFeedbackByActor(
+  relationshipId: string,
+  actorId: string,
+  entry: FeedbackEntry
+): Relationship | null {
+  const rel = findRelationship(relationshipId);
+  if (!rel) return null;
+  return submitFeedbackForActor(rel, actorId, entry) ? rel : null;
 }
 
 export function submitFeedback(
@@ -73,8 +139,11 @@ export function submitFeedback(
   }
 
   if (rel.feedbackFromViewer && rel.feedbackFromMatched) {
+    const combinedRating = getCombinedRating(rel);
     rel.status = "completed";
     rel.completedAt = Date.now();
+    rel.reusable = combinedRating != null && combinedRating >= 4;
+    rel.badMatch = combinedRating != null && combinedRating < 2.5;
   } else if (rel.status === "pending") {
     rel.status = "active";
   }

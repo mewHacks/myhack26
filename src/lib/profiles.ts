@@ -3,6 +3,7 @@ export type ActorType = "founder" | "mentor" | "investor";
 export type FounderProfile = {
   id: string;
   type: "founder";
+  verified: boolean;
   name: string;
   company: string;
   sector: string[];
@@ -19,6 +20,7 @@ export type FounderProfile = {
 export type MentorProfile = {
   id: string;
   type: "mentor";
+  verified: boolean;
   name: string;
   expertise: string[];
   stage_preference: string[];
@@ -34,6 +36,7 @@ export type MentorProfile = {
 export type InvestorProfile = {
   id: string;
   type: "investor";
+  verified: boolean;
   name: string;
   fund: string;
   thesis: string[];
@@ -51,6 +54,7 @@ export const mockFounders: FounderProfile[] = [
   {
     id: "founder-aisha",
     type: "founder",
+    verified: true,
     name: "Aisha Razak",
     company: "PayChain",
     sector: ["fintech", "b2b-saas", "payments"],
@@ -67,6 +71,7 @@ export const mockFounders: FounderProfile[] = [
   {
     id: "founder-daniel",
     type: "founder",
+    verified: true,
     name: "Daniel Lim",
     company: "MedSync",
     sector: ["healthtech", "b2b-saas", "ai"],
@@ -83,6 +88,7 @@ export const mockFounders: FounderProfile[] = [
   {
     id: "founder-priya",
     type: "founder",
+    verified: true,
     name: "Priya Nair",
     company: "SkillLoop",
     sector: ["edtech", "b2c", "ai"],
@@ -102,6 +108,7 @@ export const mockMentors: MentorProfile[] = [
   {
     id: "mentor-james",
     type: "mentor",
+    verified: true,
     name: "James Foo",
     expertise: ["fintech", "payments", "b2b-saas", "fundraising"],
     stage_preference: ["pre-seed", "seed"],
@@ -117,6 +124,7 @@ export const mockMentors: MentorProfile[] = [
   {
     id: "mentor-sarah",
     type: "mentor",
+    verified: true,
     name: "Sarah Tan",
     expertise: ["healthtech", "product-strategy", "clinical-workflows", "ai"],
     stage_preference: ["pre-seed", "seed"],
@@ -132,6 +140,7 @@ export const mockMentors: MentorProfile[] = [
   {
     id: "mentor-raj",
     type: "mentor",
+    verified: true,
     name: "Raj Pillai",
     expertise: ["gtm-strategy", "b2c-growth", "user-acquisition", "edtech"],
     stage_preference: ["pre-seed", "seed"],
@@ -147,6 +156,7 @@ export const mockMentors: MentorProfile[] = [
   {
     id: "mentor-mei",
     type: "mentor",
+    verified: true,
     name: "Mei Lin Chong",
     expertise: ["investor-narrative", "pitch-coaching", "b2b-saas", "product"],
     stage_preference: ["pre-seed", "seed", "series-a"],
@@ -165,6 +175,7 @@ export const mockInvestors: InvestorProfile[] = [
   {
     id: "investor-northstar",
     type: "investor",
+    verified: true,
     name: "Northstar Capital",
     fund: "Northstar Capital",
     thesis: ["fintech", "b2b-saas", "payments", "ai"],
@@ -179,6 +190,7 @@ export const mockInvestors: InvestorProfile[] = [
   {
     id: "investor-greenlight",
     type: "investor",
+    verified: true,
     name: "Greenlight Ventures",
     fund: "Greenlight Ventures",
     thesis: ["ai", "healthtech", "deep-tech", "b2b-saas"],
@@ -193,6 +205,7 @@ export const mockInvestors: InvestorProfile[] = [
   {
     id: "investor-orbit",
     type: "investor",
+    verified: true,
     name: "Orbit Seed",
     fund: "Orbit Seed",
     thesis: ["b2c", "edtech", "consumer-tech", "marketplace"],
