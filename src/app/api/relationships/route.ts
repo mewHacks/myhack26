@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { findProfile } from "@/lib/profiles";
-import { createRelationship, getRelationshipsForActor } from "@/lib/store";
+import { createRelationship, determineRelationshipType, getRelationshipsForActor } from "@/lib/store";
 
 export async function GET(req: NextRequest) {
   const viewerId = req.nextUrl.searchParams.get("viewerId");
@@ -25,15 +25,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Profile not found" }, { status: 404 });
   }
 
-  const type =
-    viewer.type === "mentor" || matched.type === "mentor"
-      ? "mentor:founder"
-      : "investor:founder";
-
   const rel = createRelationship({
     viewerId,
     matchedId,
-    type: type as "mentor:founder" | "investor:founder" | "mentor:investor",
+    type: determineRelationshipType(viewer.type, matched.type),
     status: "pending",
     matchScore,
     rationale: rationale ?? "",

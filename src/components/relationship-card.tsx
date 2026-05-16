@@ -59,7 +59,7 @@ export function RelationshipCard({ relationship: rel, viewerId }: RelationshipCa
         showFeedback ? (
           <FeedbackWidget
             relationshipId={rel.id}
-            side={side}
+            actorId={viewerId}
             onSubmitted={() => setShowFeedback(false)}
           />
         ) : (

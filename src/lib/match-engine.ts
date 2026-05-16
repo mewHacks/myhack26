@@ -1,15 +1,7 @@
 import type { ActorProfile } from "./profiles";
-import type { Relationship } from "./store";
+import type { MatchBreakdown, Relationship } from "./store";
 import type { WeightOverrides } from "./weight-engine";
 import { DEFAULT_WEIGHTS } from "./weight-engine";
-
-export type MatchBreakdown = {
-  domain_fit: number;
-  stage_fit: number;
-  geography: number;
-  history: number;
-  availability: number;
-};
 
 export type MatchResult = {
   id: string;

@@ -4,11 +4,11 @@ import { useState } from "react";
 
 type FeedbackWidgetProps = {
   relationshipId: string;
-  side: "viewer" | "matched";
+  actorId: string;
   onSubmitted?: (rating: number) => void;
 };
 
-export function FeedbackWidget({ relationshipId, side, onSubmitted }: FeedbackWidgetProps) {
+export function FeedbackWidget({ relationshipId, actorId, onSubmitted }: FeedbackWidgetProps) {
   const [hovered, setHovered] = useState(0);
   const [selected, setSelected] = useState(0);
   const [comment, setComment] = useState("");
@@ -22,7 +22,7 @@ export function FeedbackWidget({ relationshipId, side, onSubmitted }: FeedbackWi
     await fetch(`/api/feedback/${relationshipId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ side, rating: selected, comment }),
+      body: JSON.stringify({ actorId, rating: selected, comment }),
     });
 
     setSubmitting(false);
