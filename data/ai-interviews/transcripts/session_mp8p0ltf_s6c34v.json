@@ -1,0 +1,23 @@
+[
+  {
+    "speaker": "ai",
+    "text": "What problem are you solving, and who feels it most urgently?",
+    "questionId": "q_1",
+    "id": "turn_mp8p2ypa_ea2tck",
+    "createdAt": "2026-05-16T18:43:46.606Z"
+  },
+  {
+    "speaker": "founder",
+    "text": "what problem are you solving and who feels if most urgently what the fuck man",
+    "questionId": "q_1",
+    "id": "turn_mp8p2ypa_9icomn",
+    "createdAt": "2026-05-16T18:43:46.606Z"
+  },
+  {
+    "speaker": "ai",
+    "text": "Can you make that more concrete with a customer example, metric, or recent signal?",
+    "questionId": "q_1",
+    "id": "turn_mp8p2ypa_xghu7d",
+    "createdAt": "2026-05-16T18:43:46.606Z"
+  }
+]

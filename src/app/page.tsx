@@ -11,6 +11,7 @@ const headerLinks = [
   { href: "/startup", label: "Startup", color: "var(--color-google-blue)" },
   { href: "/mentors", label: "Mentors", color: "var(--color-google-yellow)" },
   { href: "/investors", label: "Investors", color: "var(--color-google-green)" },
+  { href: "/ai-interview", label: "AI Interview", color: "var(--color-google-red)" },
 ];
 
 const globeMarkers = [
