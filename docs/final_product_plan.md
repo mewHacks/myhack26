@@ -225,11 +225,15 @@ Milestone {
 
 ## 9. Agent Design (Google ADK)
 
-Three agents, each with a defined scope:
+Two core agents with distinct responsibilities and cross-agent communication:
 
 ### Matching Agent
-**Trigger:** Profile created/updated, programme published, daily re-score
-**Does:** Constructs Gemini prompt with both profiles + scoring rubric → receives scored output → stores MatchEvent → surfaces rationale card to user
+**Trigger:** Profile created/updated, programme published, daily re-score, or request from Insights Agent
+**Does:** 
+- Constructs Gemini prompt with both profiles + scoring rubric.
+- Receives scored output and stores MatchEvent.
+- Surfaces rationale cards to users.
+- **Communication:** Can ask the Insights Agent for historical performance data to refine match weights.
 
 **Gemini prompt core:**
 ```
@@ -240,13 +244,13 @@ Return JSON:
 { total_score, breakdown, rationale, flags }
 ```
 
-### Relationship Tracker Agent
-**Trigger:** Status change, session logged, feedback submitted
-**Does:** Updates relationship status → logs sessions → calculates combined feedback score → evaluates reusable flag → triggers feedback notifications 48hrs post-session
-
 ### Insights Agent
-**Trigger:** Admin requests report, weekly scheduled run
-**Does:** Aggregates outcomes, fill rates, mentor utilisation → generates heat map data → identifies underserved regions → produces exportable report
+**Trigger:** Admin requests report, weekly scheduled run, or request from Matching Agent
+**Does:** 
+- **Chart Generation:** Visualises ecosystem trends, match success rates, and regional density.
+- **System Intelligence:** Aggregates outcomes, fill rates, and mentor utilisation.
+- **Reporting:** Identifies underserved regions and produces exportable reports for investors/admins.
+- **Communication:** Can ask the Matching Agent for real-time match projections to forecast programme success.
 
 ---
 
@@ -265,7 +269,7 @@ Return JSON:
 
 ### Pitch as roadmap (don't build)
 - Investor deal flow module
-- Geography heat map (show static image)
+- Geography heat map (live Insights Agent generated)
 - Junior pathway track
 - Milestone + grant disbursement tracker
 
@@ -278,13 +282,13 @@ Return JSON:
 "In Covalent, you join once. Your profile persists forever."
 
 [Show: AI match with rationale card]
-"Our AI doesn't just give you a name — it tells you why."
+"Our Matching Agent doesn't just give you a name — it tells you why."
 
-[Show: relationship dashboard]
-"Every connection is tracked. Nothing disappears at cohort end."
+[Show: Insights dashboard]
+"Our Insights Agent visualises the entire ecosystem, showing where the matches are working and where more support is needed."
 
 [Show: feedback updating profile score]
-"Every rating makes the next match smarter."
+"Every rating makes the system smarter, with agents collaborating to improve future outcomes."
 ```
 
 ---
