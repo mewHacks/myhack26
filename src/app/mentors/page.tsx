@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function MentorsPage() {
-  return <AudienceBrowsePage opportunities={browsePages.mentors} theme={browsePageThemes.mentors} />;
+  return <AudienceBrowsePage audience="mentors" opportunities={browsePages.mentors} theme={browsePageThemes.mentors} />;
 }

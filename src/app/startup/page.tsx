@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function StartupPage() {
-  return <AudienceBrowsePage opportunities={browsePages.startup} theme={browsePageThemes.startup} />;
+  return <AudienceBrowsePage audience="startup" opportunities={browsePages.startup} theme={browsePageThemes.startup} />;
 }

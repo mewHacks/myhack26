@@ -1,3 +1,5 @@
+export type AudienceSlug = "startup" | "investors" | "mentors";
+
 export const headerLinks = [
   { href: "/startup", label: "Startup", color: "var(--color-google-blue)" },
   { href: "/mentors", label: "Mentors", color: "var(--color-google-yellow)" },
@@ -35,12 +37,19 @@ export type BrowseOpportunity = {
   className: string;
 };
 
+export function getOpportunitySlug(audience: AudienceSlug, title: string) {
+  return `${audience}-${title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")}`;
+}
+
 export type BrowsePageTheme = {
   sectionGradientClass: string;
   headerGlowClass: string;
 };
 
-export const browsePageThemes: Record<"startup" | "investors" | "mentors", BrowsePageTheme> = {
+export const browsePageThemes: Record<AudienceSlug, BrowsePageTheme> = {
   startup: {
     sectionGradientClass:
       "bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_52%,rgba(66,133,244,0.16)_100%)]",
@@ -58,7 +67,7 @@ export const browsePageThemes: Record<"startup" | "investors" | "mentors", Brows
   },
 };
 
-export const browsePages: Record<"startup" | "investors" | "mentors", BrowseOpportunity[]> = {
+export const browsePages: Record<AudienceSlug, BrowseOpportunity[]> = {
   startup: [
     {
       title: "Founder Residency",
