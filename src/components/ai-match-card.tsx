@@ -97,6 +97,11 @@ export function AiMatchCard({ match, index, glowClass, viewerId }: AiMatchCardPr
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
           lastXRef.current = x;
+          // Hide tooltip when hovering the bottom 30% where the button lives
+          if (y > rect.height * 0.7) {
+            setTooltipVisible(false);
+            return;
+          }
           setTooltipPos({ x: Math.min(x + 18, rect.width - 296), y: Math.min(y - 12, rect.height - 260) });
           setTooltipVisible(true);
         }}
@@ -144,7 +149,7 @@ export function AiMatchCard({ match, index, glowClass, viewerId }: AiMatchCardPr
             <RationaleCard match={match} />
           </motion.div>
 
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/55 to-transparent p-5 text-white sm:p-6">
+          <div className="absolute inset-x-0 bottom-0 z-30 bg-gradient-to-t from-black/85 via-black/55 to-transparent p-5 text-white sm:p-6">
             <div className="flex items-center justify-between gap-3">
               <span className="text-xs font-medium uppercase tracking-[0.18em] text-white/80">
                 {profileMeta(profile)}
