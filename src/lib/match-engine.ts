@@ -1,6 +1,7 @@
 import type { ActorProfile } from "./profiles";
 import type { MatchBreakdown, Relationship } from "./store";
 import type { WeightOverrides } from "./weight-engine";
+import { getGeminiGenerateContentUrl } from "./gemini-config";
 import { DEFAULT_WEIGHTS } from "./weight-engine";
 
 export type MatchResult = {
@@ -11,10 +12,6 @@ export type MatchResult = {
   breakdown: MatchBreakdown;
 };
 
-const OLLAMA_URL = process.env.OLLAMA_URL ?? "http://localhost:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL ?? "gemma3";
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? "";
-const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.0-flash";
 const DIMENSION_MAXES: MatchBreakdown = {
   domain_fit: 30,
   stage_fit: 25,
@@ -71,35 +68,18 @@ export async function getMatches(
   try {
     let cleanResponse: string;
 
-    if (GEMINI_API_KEY) {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ role: "user", parts: [{ text: buildPrompt(viewer, candidates, weights, contextNote) }] }],
-            generationConfig: { responseMimeType: "application/json" },
-          }),
-        }
-      );
-      if (!response.ok) throw new Error(`Gemini error: ${response.status} ${response.statusText}`);
-      const data = await response.json();
-      cleanResponse = data.candidates[0].content.parts[0].text.trim();
-    } else {
-      const response = await fetch(`${OLLAMA_URL}/api/generate`, {
+    {
+      const response = await fetch(getGeminiGenerateContentUrl(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: OLLAMA_MODEL,
-          prompt: buildPrompt(viewer, candidates, weights, contextNote),
-          stream: false,
-          format: "json",
+          contents: [{ role: "user", parts: [{ text: buildPrompt(viewer, candidates, weights, contextNote) }] }],
+          generationConfig: { responseMimeType: "application/json" },
         }),
       });
-      if (!response.ok) throw new Error(`Ollama error: ${response.status} ${response.statusText}`);
+      if (!response.ok) throw new Error(`Gemini error: ${response.status} ${response.statusText}`);
       const data = await response.json();
-      cleanResponse = data.response.trim();
+      cleanResponse = data.candidates[0].content.parts[0].text.trim();
     }
 
     if (cleanResponse.startsWith("```")) {
@@ -115,7 +95,7 @@ export async function getMatches(
     return validResults.sort((a, b) => b.score - a.score).slice(0, topN);
   } catch (err) {
     const reason = err instanceof Error ? err.message : "unknown error";
-    console.warn(`AI match engine unavailable; using deterministic fallback (${reason}).`);
+    console.warn(`Gemini match engine unavailable; using deterministic fallback (${reason}).`);
     return getDeterministicMatches(viewer, candidates, topN, weights);
   }
 }
