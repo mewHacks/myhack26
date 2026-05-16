@@ -23,33 +23,33 @@ function initials(name: string) {
 
 const supplementalConnections: HistoryEntry[] = [
   {
-    name: "Operator bench",
-    label: "experience",
-    avatar: "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=160&q=80",
-  },
-  {
-    name: "Founder network",
+    name: "Cradle Fund",
     label: "backed by",
-    avatar: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=160&q=80",
+    avatar: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=160&q=80",
   },
   {
-    name: "Product guild",
+    name: "Devoteam",
     label: "worked with",
+    avatar: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=160&q=80",
+  },
+  {
+    name: "42KL",
+    label: "talent partner",
     avatar: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=160&q=80",
   },
   {
-    name: "Capital circle",
-    label: "backers",
-    avatar: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=160&q=80",
+    name: "GDGKL",
+    label: "community",
+    avatar: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=160&q=80",
   },
   {
-    name: "AI operators",
-    label: "experience",
+    name: "MYStartup",
+    label: "ecosystem",
     avatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=160&q=80",
   },
   {
-    name: "Demo reviewers",
-    label: "proof",
+    name: "MDEC",
+    label: "digital economy",
     avatar: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=160&q=80",
   },
 ];
