@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
-import { AudiencePage } from "@/components/audience-page";
-import { audiencePages } from "@/lib/page-content";
+import { AudienceBrowsePage } from "@/components/audience-browse-page";
+import { browsePages, browsePageThemes } from "@/lib/browse-page-content";
 
 export const metadata: Metadata = {
-  title: "Team Page | Covalent",
-  description: "Audience page for project teams.",
+  title: "Startup | Covalent",
+  description: "Browse programmes, investors, and mentors in one place.",
 };
 
 export default function StartupPage() {
-  return <AudiencePage page={audiencePages.startup} />;
+  return <AudienceBrowsePage opportunities={browsePages.startup} theme={browsePageThemes.startup} />;
 }
