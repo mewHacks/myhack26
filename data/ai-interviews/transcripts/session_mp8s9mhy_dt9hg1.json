@@ -1,0 +1,36 @@
+[
+  {
+    "speaker": "ai",
+    "text": "What problem are you solving, and who feels it most urgently?",
+    "questionId": "q_1",
+    "id": "turn_mp8sfkro_1mmyz4",
+    "createdAt": "2026-05-16T20:17:33.924Z"
+  },
+  {
+    "speaker": "founder",
+    "text": "I don't know",
+    "questionId": "q_1",
+    "id": "turn_mp8sfkro_2vy41g",
+    "createdAt": "2026-05-16T20:17:33.924Z"
+  },
+  {
+    "speaker": "ai",
+    "text": "Can you make that more concrete with a customer example, metric, or recent signal?",
+    "questionId": "q_1",
+    "id": "turn_mp8sfkrp_4jxa9g",
+    "createdAt": "2026-05-16T20:17:33.925Z"
+  },
+  {
+    "speaker": "founder",
+    "text": "shut up shut up",
+    "questionId": "q_1",
+    "id": "turn_mp8sft9r_2aoq3e",
+    "createdAt": "2026-05-16T20:17:44.943Z"
+  },
+  {
+    "speaker": "ai",
+    "text": "Thanks, that completes the interview. The investor can now review your transcript and AI evaluation.",
+    "id": "turn_mp8sftbv_9bz9lm",
+    "createdAt": "2026-05-16T20:17:45.019Z"
+  }
+]

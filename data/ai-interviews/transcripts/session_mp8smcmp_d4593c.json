@@ -1,0 +1,22 @@
+[
+  {
+    "speaker": "ai",
+    "text": "What problem are you solving, and who feels it most urgently?",
+    "questionId": "q_1",
+    "id": "turn_mp8smkze_544wg7",
+    "createdAt": "2026-05-16T20:23:00.794Z"
+  },
+  {
+    "speaker": "founder",
+    "text": "I don't know",
+    "questionId": "q_1",
+    "id": "turn_mp8smkze_yr6c5l",
+    "createdAt": "2026-05-16T20:23:00.794Z"
+  },
+  {
+    "speaker": "ai",
+    "text": "Thanks, that completes the interview. The investor can now review your transcript and AI evaluation.",
+    "id": "turn_mp8sml24_nzhgap",
+    "createdAt": "2026-05-16T20:23:00.892Z"
+  }
+]
