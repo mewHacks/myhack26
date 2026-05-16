@@ -79,6 +79,7 @@ export function AudienceBrowsePage({ audience, opportunities, theme }: AudienceB
                     match={match}
                     index={index}
                     glowClass={theme.headerGlowClass}
+                    viewerId={viewerId}
                   />
                 ))}
           </div>

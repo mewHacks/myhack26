@@ -25,9 +25,11 @@ const statusLabel: Record<Relationship["status"], string> = {
 
 export function RelationshipCard({ relationship: rel, viewerId }: RelationshipCardProps) {
   const [showFeedback, setShowFeedback] = useState(false);
-  const matchedProfile = allProfiles.find((p) => p.id === rel.matchedId);
+  const otherActorId = rel.viewerId === viewerId ? rel.matchedId : rel.viewerId;
+  const matchedProfile = allProfiles.find((p) => p.id === otherActorId);
   const side = rel.viewerId === viewerId ? "viewer" : "matched";
   const myFeedback = side === "viewer" ? rel.feedbackFromViewer : rel.feedbackFromMatched;
+  const theirFeedback = side === "viewer" ? rel.feedbackFromMatched : rel.feedbackFromViewer;
   const canRate = !myFeedback && rel.status !== "completed";
 
   return (
@@ -45,11 +47,11 @@ export function RelationshipCard({ relationship: rel, viewerId }: RelationshipCa
       <div className="flex flex-wrap gap-4 text-xs text-muted">
         <span>Match score <strong className="text-foreground">{rel.matchScore}/100</strong></span>
         <span>Sessions <strong className="text-foreground">{rel.sessionCount}</strong></span>
-        {rel.feedbackFromViewer && (
-          <span>Your rating <strong className="text-foreground">{rel.feedbackFromViewer.rating}/5</strong></span>
+        {myFeedback && (
+          <span>Your rating <strong className="text-foreground">{myFeedback.rating}/5</strong></span>
         )}
-        {rel.feedbackFromMatched && (
-          <span>Their rating <strong className="text-foreground">{rel.feedbackFromMatched.rating}/5</strong></span>
+        {theirFeedback && (
+          <span>Their rating <strong className="text-foreground">{theirFeedback.rating}/5</strong></span>
         )}
       </div>
 

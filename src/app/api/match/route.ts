@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getMatches } from "@/lib/match-engine";
+import { excludeExistingMatches, getMatches } from "@/lib/match-engine";
 import { findProfile, getCandidatesFor } from "@/lib/profiles";
 import { getRelationshipsForActor, type Relationship } from "@/lib/store";
 import { computeWeightOverrides } from "@/lib/weight-engine";
@@ -17,9 +17,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Profile not found" }, { status: 404 });
   }
 
-  const candidates = getCandidatesFor(viewer);
   const relationships = getRelationshipsForActor(viewerId);
+  const candidates = excludeExistingMatches(viewerId, getCandidatesFor(viewer), relationships);
   const weights = computeWeightOverrides(viewerId, relationships);
+
+  if (candidates.length === 0) {
+    return NextResponse.json({ matches: [] });
+  }
 
   const completedWithFeedback = relationships.filter(
     (r) => r.status === "completed" && (r.feedbackFromViewer || r.feedbackFromMatched)

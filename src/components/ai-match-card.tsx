@@ -14,6 +14,7 @@ type AiMatchCardProps = {
   match: MatchResult;
   index: number;
   glowClass: string;
+  viewerId: string;
 };
 
 const typeLabel: Record<string, string> = {
@@ -40,7 +41,7 @@ function profileMeta(profile: ActorProfile): string {
   return `${profile.sector.slice(0, 2).join("  •  ")}  •  ${profile.stage}`;
 }
 
-export function AiMatchCard({ match, index, glowClass }: AiMatchCardProps) {
+export function AiMatchCard({ match, index, glowClass, viewerId }: AiMatchCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const lastXRef = useRef(0);
   const reducedMotion = useReducedMotion();
@@ -56,17 +57,21 @@ export function AiMatchCard({ match, index, glowClass }: AiMatchCardProps) {
 
   async function handleConnect() {
     setConnecting(true);
-    await fetch("/api/relationships", {
+    const response = await fetch("/api/relationships", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        viewerId: "founder-aisha",
+        viewerId,
         matchedId: match.id,
         matchScore: match.score,
         rationale: match.rationale,
         breakdown: match.breakdown,
       }),
     });
+    if (!response.ok) {
+      setConnecting(false);
+      return;
+    }
     setConnecting(false);
     setConnected(true);
   }
