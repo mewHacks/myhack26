@@ -1,0 +1,14 @@
+.git
+.next
+node_modules
+npm-debug.log
+.env*
+!.env.example
+deploy/ollama/adapters/covalent-lora/*
+!deploy/ollama/adapters/covalent-lora/.gitkeep
+docs
+*.md
+!README.md
+.DS_Store
+coverage
+.omc

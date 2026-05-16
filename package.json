@@ -7,7 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --import jiti/register --test tests/*.test.ts"
+    "test": "node --import jiti/register --test tests/*.test.ts",
+    "gen:training-data": "node --import jiti/register scripts/generate-training-data.ts > training-data.jsonl",
+    "setup:lora": "bash scripts/setup-lora-model.sh",
+    "health:llm": "curl -s http://localhost:3000/api/health/llm | node -e \"process.stdin.on('data',d=>console.log(JSON.stringify(JSON.parse(d),null,2)))\"",
+    "deploy:ollama": "bash scripts/deploy-ollama.sh",
+    "deploy:app": "bash scripts/deploy-app.sh",
+    "deploy:all": "bash scripts/deploy-all.sh"
   },
   "dependencies": {
     "cobe": "^2.0.1",

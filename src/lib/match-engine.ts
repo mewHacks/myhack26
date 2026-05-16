@@ -1,3 +1,5 @@
+import { llmConfig } from "./llm-config";
+import { ollamaGenerate } from "./llm-client";
 import type { ActorProfile } from "./profiles";
 import type { MatchBreakdown, Relationship } from "./store";
 import type { WeightOverrides } from "./weight-engine";
@@ -11,10 +13,6 @@ export type MatchResult = {
   breakdown: MatchBreakdown;
 };
 
-const OLLAMA_URL = process.env.OLLAMA_URL ?? "http://localhost:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL ?? "gemma3";
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? "";
-const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.0-flash";
 const DIMENSION_MAXES: MatchBreakdown = {
   domain_fit: 30,
   stage_fit: 25,
@@ -68,38 +66,41 @@ export async function getMatches(
   weights: WeightOverrides = DEFAULT_WEIGHTS,
   contextNote = ""
 ): Promise<MatchResult[]> {
+  if (!llmConfig.enabled) {
+    return getDeterministicMatches(viewer, candidates, topN, weights);
+  }
+
   try {
+    const prompt = buildPrompt(viewer, candidates, weights, contextNote);
     let cleanResponse: string;
 
-    if (GEMINI_API_KEY) {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ role: "user", parts: [{ text: buildPrompt(viewer, candidates, weights, contextNote) }] }],
-            generationConfig: { responseMimeType: "application/json" },
-          }),
-        }
-      );
-      if (!response.ok) throw new Error(`Gemini error: ${response.status} ${response.statusText}`);
-      const data = await response.json();
-      cleanResponse = data.candidates[0].content.parts[0].text.trim();
+    if (llmConfig.provider === "gemini") {
+      if (!llmConfig.geminiApiKey) {
+        throw new Error("GEMINI_API_KEY is required when LLM_PROVIDER=gemini");
+      }
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), llmConfig.timeoutMs);
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${llmConfig.geminiModel}:generateContent?key=${llmConfig.geminiApiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ role: "user", parts: [{ text: prompt }] }],
+              generationConfig: { responseMimeType: "application/json" },
+            }),
+            signal: controller.signal,
+          }
+        );
+        if (!response.ok) throw new Error(`Gemini error: ${response.status} ${response.statusText}`);
+        const data = await response.json();
+        cleanResponse = data.candidates[0].content.parts[0].text.trim();
+      } finally {
+        clearTimeout(timeout);
+      }
     } else {
-      const response = await fetch(`${OLLAMA_URL}/api/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: OLLAMA_MODEL,
-          prompt: buildPrompt(viewer, candidates, weights, contextNote),
-          stream: false,
-          format: "json",
-        }),
-      });
-      if (!response.ok) throw new Error(`Ollama error: ${response.status} ${response.statusText}`);
-      const data = await response.json();
-      cleanResponse = data.response.trim();
+      cleanResponse = await ollamaGenerate({ prompt, format: "json" });
     }
 
     if (cleanResponse.startsWith("```")) {

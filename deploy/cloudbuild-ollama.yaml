@@ -1,0 +1,40 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/covalent-ollama:$COMMIT_SHA
+      - -f
+      - deploy/ollama/Dockerfile
+      - deploy/ollama
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/covalent-ollama:$COMMIT_SHA
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - covalent-ollama
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/covalent-ollama:$COMMIT_SHA
+      - --region=${_REGION}
+      - --port=11434
+      - --cpu=4
+      - --memory=16Gi
+      - --gpu=1
+      - --gpu-type=nvidia-l4
+      - --timeout=300
+      - --min-instances=1
+      - --max-instances=2
+      - --allow-unauthenticated
+      - --set-env-vars=OLLAMA_MODEL=${_OLLAMA_MODEL}
+      - --set-secrets=OLLAMA_API_KEY=ollama-api-key:latest
+
+substitutions:
+  _REGION: asia-southeast1
+  _REPO: covalent
+  _OLLAMA_MODEL: covalent-gemma
+
+options:
+  logging: CLOUD_LOGGING_ONLY

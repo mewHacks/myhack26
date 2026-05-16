@@ -1,0 +1,4 @@
+FROM gemma3
+ADAPTER ./adapters/covalent-lora
+PARAMETER temperature 0.2
+PARAMETER num_predict 2048

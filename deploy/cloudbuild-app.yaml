@@ -1,0 +1,37 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/covalent-app:$COMMIT_SHA
+      - -f
+      - deploy/app/Dockerfile
+      - .
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/covalent-app:$COMMIT_SHA
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - covalent-app
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/covalent-app:$COMMIT_SHA
+      - --region=${_REGION}
+      - --port=8080
+      - --cpu=1
+      - --memory=1Gi
+      - --timeout=300
+      - --allow-unauthenticated
+      - --set-env-vars=LLM_PROVIDER=ollama,OLLAMA_MODEL=${_OLLAMA_MODEL},OLLAMA_URL=${_OLLAMA_URL},LLM_TIMEOUT_MS=180000
+      - --set-secrets=OLLAMA_API_KEY=ollama-api-key:latest
+
+substitutions:
+  _REGION: asia-southeast1
+  _REPO: covalent
+  _OLLAMA_MODEL: covalent-gemma
+  _OLLAMA_URL: https://REPLACE_AFTER_OLLAMA_DEPLOY
+
+options:
+  logging: CLOUD_LOGGING_ONLY
