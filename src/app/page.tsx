@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
 import NavHeader from "@/components/ui/nav-header";
 import { Globe } from "@/components/ui/cobe-globe";
+import covalentHeroMark from "@/assets/cov-logo.png";
 
 const headerLinks = [
   { href: "/startup", label: "Startup", color: "var(--color-google-blue)" },
@@ -259,7 +261,16 @@ export default function Home() {
       <section className="grid gap-6 rounded-[1.75rem] border border-line bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_58%,rgba(66,133,244,0.18)_100%)] px-6 py-8 sm:px-10 sm:py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:px-12">
         <div className="flex flex-col justify-center text-foreground">
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight sm:text-6xl">
-            <BrandMark className="text-6xl leading-none sm:text-8xl lg:text-9xl" />
+            <span className="inline-flex items-center gap-3 align-middle sm:gap-4">
+              <Image
+                src={covalentHeroMark}
+                alt=""
+                aria-hidden="true"
+                className="h-20 w-20 shrink-0 object-contain sm:h-28 sm:w-28 lg:h-36 lg:w-36"
+                priority
+              />
+              <BrandMark className="text-[3.375rem] leading-none sm:text-[4.5rem] lg:text-[7.2rem]" />
+            </span>
             <span className="ml-2 align-middle text-2xl font-medium leading-snug text-foreground sm:text-3xl lg:text-4xl">
               Match. Remember. Bridge.
             </span>
