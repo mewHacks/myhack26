@@ -46,11 +46,30 @@ export function AiMatchCard({ match, index, glowClass }: AiMatchCardProps) {
   const reducedMotion = useReducedMotion();
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const [connected, setConnected] = useState(false);
+  const [connecting, setConnecting] = useState(false);
 
   const profile = allProfiles.find((p) => p.id === match.id);
   if (!profile) return null;
 
   const entryColor = googleEntryColors[index % googleEntryColors.length];
+
+  async function handleConnect() {
+    setConnecting(true);
+    await fetch("/api/relationships", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        viewerId: "founder-aisha",
+        matchedId: match.id,
+        matchScore: match.score,
+        rationale: match.rationale,
+        breakdown: match.breakdown,
+      }),
+    });
+    setConnecting(false);
+    setConnected(true);
+  }
 
   return (
     <motion.div
@@ -130,9 +149,26 @@ export function AiMatchCard({ match, index, glowClass }: AiMatchCardProps) {
               </span>
             </div>
             <h2 className="mt-3 text-2xl font-semibold leading-tight">{profile.name}</h2>
-            <span className="mt-4 inline-flex rounded-full bg-white px-4 py-2 text-sm font-semibold text-foreground">
-              {profile.type === "mentor" ? "Book mentor" : profile.type === "investor" ? "Request intro" : "View profile"}
-            </span>
+            <button
+              type="button"
+              onClick={handleConnect}
+              disabled={connected || connecting}
+              className={`mt-4 inline-flex rounded-full px-4 py-2 text-sm font-semibold transition disabled:opacity-60 ${
+                connected
+                  ? "bg-[var(--color-google-green)] text-white"
+                  : "bg-white text-foreground hover:bg-white/90"
+              }`}
+            >
+              {connected
+                ? "✓ Connected"
+                : connecting
+                ? "Connecting…"
+                : profile.type === "mentor"
+                ? "Book mentor"
+                : profile.type === "investor"
+                ? "Request intro"
+                : "View profile"}
+            </button>
           </div>
         </div>
       </div>

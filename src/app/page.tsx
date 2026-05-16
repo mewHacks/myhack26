@@ -250,12 +250,20 @@ export default function Home() {
           <NavHeader items={headerLinks} />
         </div>
 
-        <Link
-          href="/"
-          className="justify-self-end text-sm font-medium text-muted transition hover:text-foreground"
-        >
-          Sign in
-        </Link>
+        <div className="flex items-center justify-self-end gap-3">
+          <Link
+            href="/dashboard"
+            className="text-sm font-medium text-foreground rounded-full border border-line px-4 py-1.5 transition hover:bg-black/4"
+          >
+            Dashboard
+          </Link>
+          <Link
+            href="/"
+            className="text-sm font-medium text-muted transition hover:text-foreground"
+          >
+            Sign in
+          </Link>
+        </div>
       </header>
 
       <section className="grid gap-6 rounded-[1.75rem] border border-line bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_58%,rgba(66,133,244,0.18)_100%)] px-6 py-8 sm:px-10 sm:py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:px-12">
