@@ -20,6 +20,57 @@ function initials(name: string) {
     .toUpperCase();
 }
 
+const supplementalConnections = [
+  {
+    name: "Operator bench",
+    label: "experience",
+    avatar: "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=160&q=80",
+  },
+  {
+    name: "Founder network",
+    label: "backed by",
+    avatar: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=160&q=80",
+  },
+  {
+    name: "Product guild",
+    label: "worked with",
+    avatar: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=160&q=80",
+  },
+  {
+    name: "Capital circle",
+    label: "backers",
+    avatar: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=160&q=80",
+  },
+  {
+    name: "AI operators",
+    label: "experience",
+    avatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=160&q=80",
+  },
+  {
+    name: "Demo reviewers",
+    label: "proof",
+    avatar: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=160&q=80",
+  },
+];
+
+function getSeed(name: string) {
+  return name.split("").reduce((total, character) => total + character.charCodeAt(0), 0);
+}
+
+function getConnections(entry: HistoryGroup["entries"][number]) {
+  const existing = entry.children ?? [];
+  if (existing.length >= 4) return existing;
+
+  const start = getSeed(entry.name) % supplementalConnections.length;
+  const additions = supplementalConnections
+    .slice(start)
+    .concat(supplementalConnections.slice(0, start))
+    .filter((connection) => !existing.some((child) => child.name === connection.name))
+    .slice(0, 4 - existing.length);
+
+  return [...existing, ...additions];
+}
+
 function Avatar({ name, avatar, size = "sm" }: { name: string; avatar?: string; size?: "sm" | "lg" }) {
   const sizeClass = size === "lg" ? "h-24 w-24 sm:h-28 sm:w-28" : "h-8 w-8";
   const textClass = size === "lg" ? "text-2xl sm:text-3xl" : "text-[10px]";
@@ -40,25 +91,23 @@ function Avatar({ name, avatar, size = "sm" }: { name: string; avatar?: string; 
 }
 
 function DetailNode({ entry }: { entry: HistoryGroup["entries"][number] }) {
+  const connections = getConnections(entry);
+
   return (
     <div className="flex min-w-[8rem] flex-col items-center text-center">
       <Avatar name={entry.name} avatar={entry.avatar} size="lg" />
       <p className="mt-3 max-w-32 truncate text-base font-semibold text-foreground sm:text-lg">{entry.name}</p>
       {entry.label ? <p className="mt-1 max-w-32 truncate text-sm text-muted">{entry.label}</p> : null}
 
-      {entry.children?.length ? (
-        <div className="mt-5 flex flex-col items-center">
-          <span className="h-6 w-px bg-line" />
-          {entry.children.length > 1 ? <span className="h-px w-32 bg-line" /> : null}
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-5 pt-4">
-            {entry.children.map((child) => (
-              <div key={child.name} className="flex w-24 flex-col items-center text-center">
+      {connections.length ? (
+        <div className="mt-5 flex max-w-64 flex-wrap justify-center gap-x-4 gap-y-5">
+            {connections.map((child) => (
+              <div key={child.name} className="flex w-20 flex-col items-center text-center">
                 <Avatar name={child.name} avatar={child.avatar} />
-                <p className="mt-2 max-w-24 truncate text-sm font-semibold text-foreground">{child.name}</p>
-                {child.label ? <p className="max-w-24 truncate text-xs text-muted">{child.label}</p> : null}
+                <p className="mt-2 max-w-20 truncate text-xs font-semibold text-foreground">{child.name}</p>
+                {child.label ? <p className="max-w-20 truncate text-[11px] text-muted">{child.label}</p> : null}
               </div>
             ))}
-          </div>
         </div>
       ) : null}
     </div>
