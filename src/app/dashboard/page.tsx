@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
 import { RelationshipDashboard } from "@/components/relationship-dashboard";
+import { HeaderActions } from "@/components/ui/header-actions";
 import NavHeader from "@/components/ui/nav-header";
 import { headerLinks } from "@/lib/browse-page-content";
 
@@ -23,16 +24,12 @@ export default function DashboardPage() {
           <span className="text-lg font-medium text-foreground sm:text-xl">I&apos;m a</span>
           <NavHeader items={headerLinks} />
         </div>
-        <Link href="/" className="justify-self-end text-sm font-medium text-muted transition hover:text-foreground">
-          Sign in
-        </Link>
+        <HeaderActions />
       </header>
 
-      <section className="rounded-[1.75rem] border border-line bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_58%,rgba(66,133,244,0.18)_100%)] p-6 sm:p-8">
-        <div className="mb-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">Your Activity</p>
-          <h1 className="mt-2 text-2xl font-semibold sm:text-3xl">Connection Dashboard</h1>
-        </div>
+      <section className="relative overflow-hidden rounded-[1.75rem] border border-line bg-[linear-gradient(135deg,#ffffff_0%,#ffffff_48%,rgba(66,133,244,0.18)_72%,rgba(52,168,83,0.14)_100%)] p-4 shadow-[0_24px_80px_rgba(60,64,67,0.08)] sm:p-6">
+        <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[var(--color-google-blue)]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 left-12 h-64 w-64 rounded-full bg-[var(--color-google-yellow)]/20 blur-3xl" />
         <RelationshipDashboard viewerId={DEMO_VIEWER_ID} />
       </section>
     </main>

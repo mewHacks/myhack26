@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { BrandMark } from "@/components/brand-mark";
 import { OpportunityHistoryTree } from "@/components/opportunity-history-tree";
 import { AiRecommendationIcon } from "@/components/ui/ai-recommendation-icon";
+import { HeaderActions } from "@/components/ui/header-actions";
 import NavHeader from "@/components/ui/nav-header";
 import {
   defaultHistoryGroups,
@@ -85,9 +86,7 @@ export function OpportunityDetailView({ audience, item, theme }: OpportunityDeta
           <NavHeader items={headerLinks} />
         </div>
 
-        <Link href="/" className="justify-self-end text-sm font-medium text-muted transition hover:text-foreground">
-          Sign in
-        </Link>
+        <HeaderActions />
       </motion.header>
 
       <motion.section

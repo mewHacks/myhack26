@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
-import { type HistoryGroup } from "@/lib/browse-page-content";
+import { getProfileSlug, type HistoryEntry, type HistoryGroup } from "@/lib/browse-page-content";
 
 type OpportunityHistoryTreeProps = {
   groups: HistoryGroup[];
@@ -20,7 +21,7 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-const supplementalConnections = [
+const supplementalConnections: HistoryEntry[] = [
   {
     name: "Operator bench",
     label: "experience",
@@ -57,9 +58,9 @@ function getSeed(name: string) {
   return name.split("").reduce((total, character) => total + character.charCodeAt(0), 0);
 }
 
-function getConnections(entry: HistoryGroup["entries"][number]) {
+function getConnections(entry: HistoryEntry, includeSupplemental = true) {
   const existing = entry.children ?? [];
-  if (existing.length >= 4) return existing;
+  if (!includeSupplemental || existing.length >= 4) return existing;
 
   const start = getSeed(entry.name) % supplementalConnections.length;
   const additions = supplementalConnections
@@ -90,24 +91,45 @@ function Avatar({ name, avatar, size = "sm" }: { name: string; avatar?: string; 
   );
 }
 
-function DetailNode({ entry }: { entry: HistoryGroup["entries"][number] }) {
-  const connections = getConnections(entry);
+function profileHref(name: string) {
+  return `/profiles/${getProfileSlug(name)}`;
+}
+
+function DetailProfileLink({ entry, size = "sm" }: { entry: HistoryEntry; size?: "sm" | "lg" }) {
+  const textClass = size === "lg" ? "mt-3 max-w-32 text-base sm:text-lg" : "mt-2 max-w-20 text-xs";
+  const labelClass = size === "lg" ? "mt-1 max-w-32 text-sm" : "max-w-20 text-[11px]";
+
+  return (
+    <Link
+      href={profileHref(entry.name)}
+      className="group flex flex-col items-center text-center outline-none transition hover:-translate-y-0.5 focus-visible:-translate-y-0.5"
+    >
+      <Avatar name={entry.name} avatar={entry.avatar} size={size} />
+      <p className={`${textClass} truncate font-semibold text-foreground transition group-hover:text-[var(--color-google-blue)] group-focus-visible:text-[var(--color-google-blue)]`}>
+        {entry.name}
+      </p>
+      {entry.label ? <p className={`${labelClass} truncate text-muted`}>{entry.label}</p> : null}
+    </Link>
+  );
+}
+
+function DetailNode({ entry, depth = 0 }: { entry: HistoryEntry; depth?: number }) {
+  const connections = getConnections(entry, depth === 0);
+  const canRecurse = depth < 3;
 
   return (
     <div className="flex min-w-[8rem] flex-col items-center text-center">
-      <Avatar name={entry.name} avatar={entry.avatar} size="lg" />
-      <p className="mt-3 max-w-32 truncate text-base font-semibold text-foreground sm:text-lg">{entry.name}</p>
-      {entry.label ? <p className="mt-1 max-w-32 truncate text-sm text-muted">{entry.label}</p> : null}
+      <DetailProfileLink entry={entry} size={depth === 0 ? "lg" : "sm"} />
 
       {connections.length ? (
-        <div className="mt-5 flex max-w-64 flex-wrap justify-center gap-x-4 gap-y-5">
-            {connections.map((child) => (
-              <div key={child.name} className="flex w-20 flex-col items-center text-center">
-                <Avatar name={child.name} avatar={child.avatar} />
-                <p className="mt-2 max-w-20 truncate text-xs font-semibold text-foreground">{child.name}</p>
-                {child.label ? <p className="max-w-20 truncate text-[11px] text-muted">{child.label}</p> : null}
-              </div>
-            ))}
+        <div className="mt-5 flex max-w-80 flex-wrap justify-center gap-x-4 gap-y-5">
+          {connections.map((child) => (
+            child.children?.length && canRecurse ? (
+              <DetailNode key={child.name} entry={child} depth={depth + 1} />
+            ) : (
+              <DetailProfileLink key={child.name} entry={child} />
+            )
+          ))}
         </div>
       ) : null}
     </div>
@@ -128,7 +150,9 @@ export function OpportunityHistoryTree({ groups, mode = "preview" }: Opportunity
               {group.entries.some((entry) => entry.avatar) ? (
                 <div className="flex -space-x-2.5">
                   {group.entries.slice(0, 3).map((entry) => (
-                    <Avatar key={entry.name} name={entry.name} avatar={entry.avatar} />
+                    <Link key={entry.name} href={profileHref(entry.name)} className="rounded-full outline-none transition hover:-translate-y-0.5 focus-visible:-translate-y-0.5">
+                      <Avatar name={entry.name} avatar={entry.avatar} />
+                    </Link>
                   ))}
                 </div>
               ) : (
@@ -170,13 +194,13 @@ export function OpportunityHistoryTree({ groups, mode = "preview" }: Opportunity
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">{group.title}</p>
           <div className="mt-2 space-y-2">
             {group.entries.map((entry) => (
-              <div key={entry.name} className="flex items-center gap-4 rounded-[1.5rem] bg-black/[0.035] px-4 py-4">
+              <Link key={entry.name} href={profileHref(entry.name)} className="flex items-center gap-4 rounded-[1.5rem] bg-black/[0.035] px-4 py-4 transition hover:-translate-y-0.5 hover:bg-black/[0.055] focus-visible:-translate-y-0.5 focus-visible:outline-none">
                 <Avatar name={entry.name} avatar={entry.avatar} />
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-foreground">{entry.name}</p>
                   {entry.label ? <p className="truncate text-xs text-muted">{entry.label}</p> : null}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

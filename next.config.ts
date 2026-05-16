@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.mystartup.gov.my",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "mystartupprodstorage.blob.core.windows.net",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
 import { StockImageRail } from "@/components/stock-image-rail";
+import { HeaderActions } from "@/components/ui/header-actions";
 import NavHeader from "@/components/ui/nav-header";
 import type { AudiencePageContent } from "@/lib/page-content";
 
@@ -45,12 +46,7 @@ export function AudiencePage({ page }: AudiencePageProps) {
 
         <NavHeader items={headerLinks} className="justify-self-center" />
 
-        <Link
-          href="/"
-          className="justify-self-end text-sm font-medium text-muted transition hover:text-foreground"
-        >
-          Sign in
-        </Link>
+        <HeaderActions />
       </header>
 
       <section className="grid gap-6 rounded-[1.75rem] border border-line p-3">
