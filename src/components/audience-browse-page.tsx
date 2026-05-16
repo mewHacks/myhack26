@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 
+import { AiMatchCard } from "@/components/ai-match-card";
 import { BrandMark } from "@/components/brand-mark";
 import { OpportunityCard } from "@/components/opportunity-card";
 import NavHeader from "@/components/ui/nav-header";
@@ -10,6 +13,13 @@ import {
   type BrowseOpportunity,
   type BrowsePageTheme,
 } from "@/lib/browse-page-content";
+import { useAiMatches } from "@/hooks/use-ai-matches";
+
+const defaultViewerIds: Record<AudienceSlug, string> = {
+  startup: "founder-aisha",
+  mentors: "mentor-james",
+  investors: "investor-northstar",
+};
 
 type AudienceBrowsePageProps = {
   audience: AudienceSlug;
@@ -18,7 +28,9 @@ type AudienceBrowsePageProps = {
 };
 
 export function AudienceBrowsePage({ audience, opportunities, theme }: AudienceBrowsePageProps) {
-  const recommended = opportunities.slice(0, 3);
+  const viewerId = defaultViewerIds[audience];
+  const { matches, loading } = useAiMatches(viewerId);
+
   const browseMore = opportunities.slice(3);
 
   return (
@@ -43,21 +55,32 @@ export function AudienceBrowsePage({ audience, opportunities, theme }: AudienceB
           <div className="flex items-end justify-between gap-4 px-1">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">AI Recommended</p>
-              <h1 className="mt-2 text-2xl font-semibold leading-tight sm:text-3xl">Best next matches for you</h1>
+              <h1 className="mt-2 text-2xl font-semibold leading-tight sm:text-3xl">
+                {loading ? "Finding your best matches…" : "Best next matches for you"}
+              </h1>
             </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {recommended.map((item, index) => (
-              <OpportunityCard
-                key={item.title}
-                glowClass={theme.headerGlowClass}
-                href={`/opportunities/${getOpportunitySlug(audience, item.title)}`}
-                index={index}
-                item={item}
-                recommended
-              />
-            ))}
+            {loading || matches.length === 0
+              ? opportunities.slice(0, 3).map((item, index) => (
+                  <OpportunityCard
+                    key={item.title}
+                    glowClass={theme.headerGlowClass}
+                    href={`/opportunities/${getOpportunitySlug(audience, item.title)}`}
+                    index={index}
+                    item={item}
+                    recommended
+                  />
+                ))
+              : matches.map((match, index) => (
+                  <AiMatchCard
+                    key={match.id}
+                    match={match}
+                    index={index}
+                    glowClass={theme.headerGlowClass}
+                  />
+                ))}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -66,7 +89,7 @@ export function AudienceBrowsePage({ audience, opportunities, theme }: AudienceB
                 key={item.title}
                 glowClass={theme.headerGlowClass}
                 href={`/opportunities/${getOpportunitySlug(audience, item.title)}`}
-                index={recommended.length + index}
+                index={3 + index}
                 item={item}
               />
             ))}
