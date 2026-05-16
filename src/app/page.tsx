@@ -261,7 +261,7 @@ export default function Home() {
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight sm:text-6xl">
             <BrandMark className="text-6xl leading-none sm:text-8xl lg:text-9xl" />
             <span className="ml-2 align-middle text-2xl font-medium leading-snug text-foreground sm:text-3xl lg:text-4xl">
-              bridging ecosystems.
+              Match. Remember. Bridge.
             </span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
