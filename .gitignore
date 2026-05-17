@@ -50,3 +50,8 @@ next-env.d.ts
 /zksafe-extension/extension-dist/
 /zksafe-extension/*.zip
 /zksafe-extension/.env.local
+
+# local AI interview runtime data
+/data/ai-interviews/sessions.json
+/data/ai-interviews/reports/
+/data/ai-interviews/transcripts/
