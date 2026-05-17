@@ -1,0 +1,312 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #202124;
+  --google-blue: #4285f4;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc05;
+  --google-green: #34a853;
+  --google-gray: #5f6368;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-press-start-2p);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-press-start-2p);
+}
+
+html:not(.dashboard-page),
+body:not(.dashboard-page) {
+  width: 380px;
+  min-width: 380px;
+  max-width: 380px;
+  height: 600px;
+  min-height: 600px;
+  max-height: 600px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dashboard-page {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.google-gradient {
+  background-image: linear-gradient(135deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
+}
+
+.wire-bg {
+  background-color: #f4f4f4;
+  background-image:
+    linear-gradient(30deg, rgba(0, 0, 0, 0.035) 12%, transparent 12.5%, transparent 87%, rgba(0, 0, 0, 0.035) 87.5%, rgba(0, 0, 0, 0.035)),
+    linear-gradient(150deg, rgba(0, 0, 0, 0.035) 12%, transparent 12.5%, transparent 87%, rgba(0, 0, 0, 0.035) 87.5%, rgba(0, 0, 0, 0.035));
+  background-size: 56px 96px;
+  background-position: 0 0, 28px 48px;
+}
+
+.prism-border {
+  border: 4px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green)) border-box;
+}
+
+.prism-border-danger {
+  border: 4px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #ea4335, #ff7043, #fb8c00) border-box;
+}
+
+.pixel-text {
+  letter-spacing: 0.18em;
+}
+
+.checkmark-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.checkmark-svg {
+  width: 140px;
+  height: 140px;
+}
+
+.fast-spinner {
+  animation: fast-spin 0.8s linear infinite;
+}
+
+@keyframes fast-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.checkmark-ring-arc {
+  stroke-dasharray: 85 15;
+  stroke-dashoffset: 0;
+  animation: ring-halving-complete 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.ring-scanning {
+  stroke-dasharray: 25 75;
+  animation: scanning-chase 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes scanning-chase {
+  0% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 5 95;
+  }
+  50% {
+    stroke-dasharray: 60 40;
+  }
+  100% {
+    stroke-dashoffset: -100;
+    stroke-dasharray: 5 95;
+  }
+}
+
+.checkmark-mask-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-check 800ms cubic-bezier(.44,-0.05,0,1) forwards;
+}
+
+.danger-path {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: draw-check 600ms cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ring-halving-complete {
+  0% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 0 100; /* 100% gone */
+  }
+  40% {
+    stroke-dashoffset: -10;
+    stroke-dasharray: 0 100; /* Stay gone for a moment */
+  }
+  75% {
+    stroke-dashoffset: -100;
+    stroke-dasharray: 100 0;  /* Surge to complete circle */
+  }
+  90% {
+    stroke-dashoffset: -100;
+    stroke-dasharray: 100 0;
+  }
+  100% {
+    stroke-dashoffset: -100;
+    stroke-dasharray: 0 100;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkmark-ring-arc,
+  .checkmark-mask-path,
+  .danger-path {
+    animation: none;
+  }
+
+  .checkmark-ring-arc {
+    stroke-dasharray: 84 16;
+    stroke-dashoffset: -14;
+  }
+
+  .checkmark-mask-path,
+  .danger-path {
+    stroke-dashoffset: 0;
+  }
+}
+
+.heading-2 {
+  font-family: var(--font-press-start-2p);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Thinking Grid Animations */
+@keyframes thinking-bloom {
+  0% { opacity: 0; transform: scale(0.8); }
+  10% { opacity: 1; transform: scale(1.1); }
+  55% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+@keyframes icon-23-k {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  26% { opacity: 0.08; }
+  100% { opacity: 0; }
+}
+
+@keyframes icon-35-k {
+  0% { opacity: 0.08; }
+  25% { opacity: 1; }
+  50% { opacity: 0.08; }
+  75% { opacity: 1; }
+  100% { opacity: 0.08; }
+}
+
+@keyframes icon-06-k {
+  0% { opacity: 0.18; }
+  6% { opacity: 0.95; }
+  14% { opacity: 0.30; }
+  22% { opacity: 1; }
+  34% { opacity: 0.20; }
+  70% { opacity: 0.18; }
+  100% { opacity: 0.18; }
+}
+
+@keyframes icon-58-k {
+  0% { opacity: 0.08; }
+  14% { opacity: 1; }
+  72% { opacity: 0.95; }
+  100% { opacity: 0.08; }
+}
+
+.thinking-dot {
+  opacity: 0;
+  transform-origin: center;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  50% { transform: translateX(150%) skewX(-20deg); }
+  100% { transform: translateX(150%) skewX(-20deg); }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}
+
+.bloom { animation: thinking-bloom 2200ms cubic-bezier(0.16, 1, 0.3, 1) infinite both; }
+.knight { animation: icon-23-k 3200ms linear infinite both; }
+.ladder { animation: icon-35-k 2400ms linear infinite both; }
+.heartbeat { animation: icon-06-k 1600ms cubic-bezier(0.25, 1, 0.5, 1) infinite both; }
+.stairs { animation: icon-58-k 2200ms cubic-bezier(0.25, 1, 0.5, 1) infinite both; }
+
+/* Delay classes (Knight's Tour) */
+.knight.d00 { animation-delay: 0ms; }
+.knight.d01 { animation-delay: 2538ms; }
+.knight.d02 { animation-delay: 1986ms; }
+.knight.d03 { animation-delay: 1434ms; }
+.knight.d04 { animation-delay: 221ms; }
+.knight.d10 { animation-delay: 1876ms; }
+.knight.d11 { animation-delay: 1324ms; }
+.knight.d12 { animation-delay: 110ms; }
+.knight.d13 { animation-delay: 883ms; }
+.knight.d14 { animation-delay: 2097ms; }
+.knight.d20 { animation-delay: 2648ms; }
+.knight.d21 { animation-delay: 772ms; }
+.knight.d22 { animation-delay: 2428ms; }
+.knight.d23 { animation-delay: 331ms; }
+.knight.d24 { animation-delay: 1545ms; }
+.knight.d30 { animation-delay: 1214ms; }
+.knight.d31 { animation-delay: 1766ms; }
+.knight.d32 { animation-delay: 552ms; }
+.knight.d33 { animation-delay: 2207ms; }
+.knight.d34 { animation-delay: 993ms; }
+.knight.d40 { animation-delay: 662ms; }
+.knight.d41 { animation-delay: 2317ms; }
+.knight.d42 { animation-delay: 1103ms; }
+.knight.d43 { animation-delay: 1655ms; }
+.knight.d44 { animation-delay: 441ms; }
+
+/* Delay classes (Ladder) */
+.ladder.d00, .ladder.d01, .ladder.d02, .ladder.d03, .ladder.d04 { animation-delay: 600ms; }
+.ladder.d10, .ladder.d11, .ladder.d12, .ladder.d13, .ladder.d14 { animation-delay: 300ms; }
+.ladder.d20, .ladder.d21, .ladder.d22, .ladder.d23, .ladder.d24 { animation-delay: 0ms; }
+.ladder.d30, .ladder.d31, .ladder.d32, .ladder.d33, .ladder.d34 { animation-delay: 2100ms; }
+.ladder.d40, .ladder.d41, .ladder.d42, .ladder.d43, .ladder.d44 { animation-delay: 1800ms; }
+
+/* Delay classes (Heartbeat) */
+.heartbeat.d00, .heartbeat.d04, .heartbeat.d40, .heartbeat.d44 { animation-delay: 68ms; }
+.heartbeat.d01, .heartbeat.d03, .heartbeat.d10, .heartbeat.d14, .heartbeat.d30, .heartbeat.d34, .heartbeat.d41, .heartbeat.d43 { animation-delay: 54ms; }
+.heartbeat.d02, .heartbeat.d20, .heartbeat.d24, .heartbeat.d42 { animation-delay: 48ms; }
+.heartbeat.d11, .heartbeat.d13, .heartbeat.d31, .heartbeat.d33 { animation-delay: 34ms; }
+.heartbeat.d12, .heartbeat.d21, .heartbeat.d23, .heartbeat.d32 { animation-delay: 24ms; }
+.heartbeat.d22 { animation-delay: 0ms; }
+
+/* Delay classes (Stairs) */
+.stairs.d04 { animation-delay: 1956ms; }
+.stairs.d13 { animation-delay: 1467ms; }
+.stairs.d14 { animation-delay: 1711ms; }
+.stairs.d22 { animation-delay: 978ms; }
+.stairs.d23 { animation-delay: 1222ms; }
+.stairs.d31 { animation-delay: 489ms; }
+.stairs.d32 { animation-delay: 733ms; }
+.stairs.d40 { animation-delay: 0ms; }
+.stairs.d41 { animation-delay: 244ms; }
+
+/* Delay classes (Bloom - original) */
+.bloom.d00, .bloom.d04, .bloom.d40, .bloom.d44 { animation-delay: 733ms; }
+.bloom.d01, .bloom.d03, .bloom.d10, .bloom.d14, .bloom.d30, .bloom.d34, .bloom.d41, .bloom.d43 { animation-delay: 550ms; }
+.bloom.d02, .bloom.d11, .bloom.d13, .bloom.d20, .bloom.d24, .bloom.d31, .bloom.d33, .bloom.d42 { animation-delay: 367ms; }
+.bloom.d12, .bloom.d21, .bloom.d23, .bloom.d32 { animation-delay: 183ms; }
+.bloom.d22 { animation-delay: 0ms; }

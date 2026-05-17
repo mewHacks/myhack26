@@ -1,0 +1,12 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - asia-southeast1-docker.pkg.dev/zksafe/zksafe/zksafe-scorer:latest
+      - -f
+      - scorer/Dockerfile
+      - .
+
+images:
+  - asia-southeast1-docker.pkg.dev/zksafe/zksafe/zksafe-scorer:latest

@@ -1,4 +1,4 @@
-.omc
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -23,18 +23,14 @@
 # misc
 .DS_Store
 *.pem
-*service-account*.json
-credentials*.json
-gcloud-*.json
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-firebase-debug.log*
 
-# env files
+# env files (can opt-in for committing if needed)
 .env*
 
 # vercel
@@ -44,9 +40,6 @@ firebase-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# vendored zkSafe generated outputs
-/zksafe-extension/.next/
-/zksafe-extension/out/
-/zksafe-extension/extension-dist/
-/zksafe-extension/*.zip
-/zksafe-extension/.env.local
+# python
+__pycache__/
+*.pyc
