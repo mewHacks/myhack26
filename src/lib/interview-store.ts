@@ -45,9 +45,9 @@ export type InterviewEvaluation = {
 };
 
 const rootDir = path.join(/*turbopackIgnore: true*/ process.cwd(), "data", "ai-interviews");
-const sessionsFile = path.join(rootDir, "sessions.json");
-const transcriptsDir = path.join(rootDir, "transcripts");
-const reportsDir = path.join(rootDir, "reports");
+const sessionsFile = path.join(/*turbopackIgnore: true*/ process.cwd(), "data", "ai-interviews", "sessions.json");
+const transcriptsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), "data", "ai-interviews", "transcripts");
+const reportsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), "data", "ai-interviews", "reports");
 
 function ensureStore() {
   for (const dir of [rootDir, transcriptsDir, reportsDir]) {

@@ -201,13 +201,12 @@ export function FounderRoom({
   const [companyName] = useState(session.companyName || "DemoCo");
   const [manualAnswer, setManualAnswer] = useState("");
   const [interimAnswer, setInterimAnswer] = useState("");
-  const [isListening, setIsListening] = useState(false);
+  const [, setIsListening] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(true);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isVideoConnected, setIsVideoConnected] = useState(false);
   const [isAiSpeaking, setIsAiSpeaking] = useState(false);
   const [hasJoined, setHasJoined] = useState(session.status === "completed");
-  const [hasStarted, setHasStarted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFinished, setIsFinished] = useState(session.status === "completed");
   const [videoStatus, setVideoStatus] = useState("Not connected");
@@ -503,7 +502,6 @@ export function FounderRoom({
   }
 
   function startInterview() {
-    setHasStarted(true);
     shouldListenRef.current = true;
     shouldPauseForAiRef.current = true;
     hasFounderSpeechForTurnRef.current = false;
