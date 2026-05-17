@@ -1,0 +1,37 @@
+[
+  {
+    "speaker": "ai",
+    "text": "What problem are you solving, and who feels it most urgently?",
+    "questionId": "q_1",
+    "id": "turn_mp8plxxq_52fkti",
+    "createdAt": "2026-05-16T18:58:32.078Z"
+  },
+  {
+    "speaker": "founder",
+    "text": "I have no idea at all",
+    "questionId": "q_1",
+    "id": "turn_mp8plxxq_e1r7bu",
+    "createdAt": "2026-05-16T18:58:32.078Z"
+  },
+  {
+    "speaker": "ai",
+    "text": "Can you make that more concrete with a customer example, metric, or recent signal?",
+    "questionId": "q_1",
+    "id": "turn_mp8plxxq_ea1wtz",
+    "createdAt": "2026-05-16T18:58:32.078Z"
+  },
+  {
+    "speaker": "founder",
+    "text": "fuck fuck fuck fuck fuck fuck",
+    "questionId": "q_1",
+    "id": "turn_mp8pm5nt_i12ph5",
+    "createdAt": "2026-05-16T18:58:42.089Z"
+  },
+  {
+    "speaker": "ai",
+    "text": "Who is your initial target customer, and how are you reaching them?",
+    "questionId": "q_2",
+    "id": "turn_mp8pm5nt_6k0lr1",
+    "createdAt": "2026-05-16T18:58:42.089Z"
+  }
+]
